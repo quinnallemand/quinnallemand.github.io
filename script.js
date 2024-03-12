@@ -3,7 +3,7 @@
 await WebMidi.enable();
 
 // this is a variable we use to capture the transposition value from the slider in html
-let transposition = 0;
+
 
 // Initialize variables to store the first MIDI input and output devices detected.
 // These devices can be used to send or receive MIDI messages.
@@ -16,13 +16,114 @@ let dropIns = document.getElementById("dropdown-ins");
 let dropOuts = document.getElementById("dropdown-outs");
 
 //gathers information from the slider object on HTML and puts it in a variable called "slider"
-let slider = document.getElementById("slide");
 
-slider.addEventListener("change", function() {
-  document.getElementById("transpoAmount").innerText = `${slider.value} semitones`
-})
+let scale = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
-//creates a fuction that actuates every time we change the value of the slider
+let majorButton = document.getElementById("majorScale")
+
+majorButton.addEventListener("click", function() { 
+    scale[0] = 0;
+    scale[1] = 2;
+    scale[2] = 2;
+    scale[3] = 4;
+    scale[4] = 4;
+    scale[5] = 5;
+    scale[6] = 7;
+    scale[7] = 7;
+    scale[8] = 9;
+    scale[9] = 9;
+    scale[10] = 11;
+    scale[11] = 11;
+    scale[12] = 12;
+    console.log (scale);
+  });
+
+  let minorButton = document.getElementById("minorScale")
+
+  minorButton.addEventListener("click", function() { 
+    scale[0] = 0;
+    scale[1] = 2;
+    scale[2] = 2;
+    scale[3] = 3;
+    scale[4] = 3;
+    scale[5] = 5;
+    scale[6] = 7;
+    scale[7] = 7;
+    scale[8] = 8;
+    scale[9] = 8;
+    scale[10] = 10;
+    scale[11] = 10;
+    scale[12] = 12;
+    console.log (scale);
+  });
+
+  let NoButton = document.getElementById("noScale")
+
+  NoButton.addEventListener("click", function() { 
+    scale[0] = 0;
+    scale[1] = 1;
+    scale[2] = 2;
+    scale[3] = 3;
+    scale[4] = 4;
+    scale[5] = 5;
+    scale[6] = 6;
+    scale[7] = 7;
+    scale[8] = 8;
+    scale[9] = 9;
+    scale[10] = 10;
+    scale[11] = 11;
+    scale[12] = 12;
+    console.log (scale);
+  });
+
+  let majorPent = document.getElementById("majorPentScale")
+
+  majorPent.addEventListener("click", function() { 
+    scale[0] = 0;
+    scale[1] = 2;
+    scale[2] = 2;
+    scale[3] = 4;
+    scale[4] = 4;
+    scale[5] = 7;
+    scale[6] = 7;
+    scale[7] = 7;
+    scale[8] = 9;
+    scale[9] = 9;
+    scale[10] = 9;
+    scale[11] = 12;
+    scale[12] = 12;
+    console.log (scale);
+  });
+
+  let minorPent = document.getElementById("minorPentScale")
+
+  minorPent.addEventListener("click", function() { 
+    scale[0] = 0;
+    scale[1] = 0;
+    scale[2] = 3;
+    scale[3] = 3;
+    scale[4] = 3;
+    scale[5] = 5;
+    scale[6] = 5;
+    scale[7] = 7;
+    scale[8] = 7;
+    scale[9] = 7;
+    scale[10] = 10;
+    scale[11] = 10;
+    scale[12] = 12;
+    console.log (scale);
+  });
+
+let noteAdd = [0]
+
+let numberOfBalls = document.getElementById("numberOfBalls")
+
+//function that creates a new number within the base set specified by the array "scale" and then adds the new number to "noteAdd"
+const randomizer = function () {
+  noteAdd[0] = scale[(Math.floor(Math.random()*scale.length))];
+  console.log(noteAdd);
+};
+
 
 // For each MIDI input device detected, add an option to the input devices dropdown.
 // This loop iterates over all detected input devices, adding them to the dropdown.
@@ -37,23 +138,25 @@ WebMidi.outputs.forEach(function (output, num) {
 });
  //define midi processing information
 
-
+ 
 
 const midiProcess = function (midiNoteInput) {
-    
     // places the midi note mumber into an object
-    let pitch = midiNoteInput.note.number + parseInt(slider.value);
+    // this takes the original pitch played and adds the value of "noteAdd" to it creating a new pitch.
+    let pitch = midiNoteInput.note.number + parseInt(noteAdd)
     //places the raw attack value into an object and lets us change these values
     // creates a note output that has the values from the previous two objects
     let velocity = midiNoteInput.note.rawAttack;
-  
-    let midiNoteOutput = new Note(pitch, { rawAttack: velocity })
-    console.log(midiNoteOutput)
+    let midiNoteOutput = new Note(pitch, {rawAttack: velocity});
     return midiNoteOutput;
   };
+
+
 // Add an event listener for the 'change' event on the input devices dropdown.
 // This allows the script to react when the user selects a different MIDI input device.
 dropIns.addEventListener("change", function () {
+ // links the random number generator whever channel the user is using, and changes the number when a "noteon" is recognized.
+  const listeners = WebMidi.inputs[2].addListener("noteon", randomizer,{channels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]});
   // Before changing the input device, remove any existing event listeners
   // to prevent them from being called after the device has been changed.
   if (myInput.hasListener("noteon")) {
@@ -61,24 +164,25 @@ dropIns.addEventListener("change", function () {
   }
   if (myInput.hasListener("noteoff")) {
     myInput.removeListener("noteoff");
-  }
-  // Change the input device based on the user's selection in the dropdown.
+  } // Change the input device based on the user's selection in the dropdown.
   myInput = WebMidi.inputs[dropIns.value];
-
-  // After changing the input device, add new listeners for 'noteon' and 'noteoff' events.
+ // After changing the input device, add new listeners for 'noteon' and 'noteoff' events.
   // These listeners will handle MIDI note on (key press) and note off (key release) messages.
   myInput.addListener("noteon", function (someMIDI) {
+   
     // When a note on event is received, send a note on message to the output device.
     // This can trigger a sound or action on the MIDI output device.
     myOutput.sendNoteOn(midiProcess(someMIDI));
-  });
-
+     }); 
   myInput.addListener("noteoff", function (someMIDI) {
     // Similarly, when a note off event is received, send a note off message to the output device.
     // This signals the end of a note being played.
     myOutput.sendNoteOff(midiProcess(someMIDI));
+      });
   });
-});
+
+
+
 // Add an event listener for the 'change' event on the output devices dropdown.
 // This allows the script to react when the user selects a different MIDI output device.
 dropOuts.addEventListener("change", function () {
@@ -87,6 +191,7 @@ dropOuts.addEventListener("change", function () {
   // MIDI channels are often used to separate messages for different instruments or sounds.
   myOutput = WebMidi.outputs[dropOuts.value];
 });
+
 
 
 // normalizing data turns data points and places them in a value between 0 and 1 almost like a percentage.

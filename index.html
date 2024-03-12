@@ -4,7 +4,7 @@
 <html>
   <head>
     <!-- The head section contains meta information, scripts, and links to external resources. -->
-    <title>WebMIDI IO</title>
+    <title>Midi Randomizer</title>
     <!-- The title tag sets the title of the web page as it appears in the browser tab. -->
 
     <!-- This script tag links to the WebMidi.js library, enabling MIDI functionality in the web browser. -->
@@ -12,13 +12,14 @@
 
     <!-- This script tag links to the external JavaScript file that contains the logic for handling MIDI devices. -->
     <script src="script.js" type="module"></script>
+    <h1 style="margin-bottom: 5%;">Randomize Your MIDI Notes!</h1>
   </head>
   <body>
     <!-- The body section contains the content of the web page. -->
-    <h1>Such good MIDI Fx</h1>
+    <h3 style="margin-bottom: 5%;" >Select Your Midi Input and output</h3>
     <!-- An h1 header that provides a title or a brief description of the page's purpose. -->
 
-    <div>
+    <div style="margin-bottom: 5%;">
       <!-- A division or a section in an HTML document, used here to group the input device selector. -->
       <label for="dropdown-ins">Select a MIDI Input:</label>
       <!-- The label tag defines a label for the select element below. The 'for' attribute specifies which form element the label is bound to. -->
@@ -28,7 +29,7 @@
       </select>
     </div>
 
-    <div>
+    <div style="margin-bottom: 5%;">
       <!-- Another division for grouping the output device selector. -->
       <label for="dropdown-outs">Select a MIDI Output:</label>
       <!-- Similar to the input label, this defines a label for the MIDI output selector. -->
@@ -38,11 +39,35 @@
       </select>
     </div>
     <!-- Slider!! we neeed to send it to javascript, set a range for it and then in Java we need this to effect the transposition -->
-    <div>
-      <label for="slide">Transposition Amount</label>
-      <input type="range" id="slide" min="-12" max="12"/>
-      <p id="transpoAmount">0 semitones</p>
+    <h3 style="margin-bottom: 5%;">Press a "Scale Button" and Keep Hitting the Same Note to Hear the Effect</h3>
+    <div style="margin-bottom: 5%;">
+      <button id="majorScale">Major Scale</button>
+      <button id="noScale">Chromatic</button>
+      <button id="minorScale">minor Scale</button>
+      <button id="majorPentScale">Major Pentatonic</button>
+      <button id="minorPentScale">Minor Pentatonic</button>
+
     </div>
-      
+    <div style="margin-bottom: 5%;">
+      <p1> This program takes your MIDI notes and then Randomizes them within the constraints of a scale such as Major Minor, or Chormatic.
+      The way this works is, There are two different global Arrays, One of them, called "scales," contains the information for the scale and/or 
+      key. the other is a capturing device, called "noteAdd," for a randomizer that spits out differnt index nubmers for "scales."
+      I first tried to place the randomizer directly into the function that controlled the pitch and velocity of the midi notes, but
+      I found that becuase this function is used twice for each hit note (once for the "noteon" and again for the "noteoff") I found
+      that the MIDI input and the output would produce different numbers (causeing most of the notes to purpetuate until there was a resulting
+      output pitch that matched with it). Because of this problem I found a way to place the randomizer in more of a global sense, so that
+      it would still actuate when a note is pressed, but the value it produced can be inserted into the function that controlls the MIDI note number.
+      After this trial and error process was complete I then just added some more keys and scales to make things more interesting,
+      like that of the pentatonic scales.
+      </p1>
+  </div>
+  <div style="margin-bottom: 5%;">
+    <p2>By the time you read this Canvas will have told you I submitted this assignment late but that was because I didnt expext half of the
+      issues that I faced when I started this project.
+    </p2>
+  </div>
+  <div style="margin-bottom: 5%;">
+   <p3>I hope everything works by the time you open this aswell - Quinn Allemand-</p3>
+  </div>
   </body>
 </html>
