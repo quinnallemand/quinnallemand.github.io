@@ -156,7 +156,7 @@ const midiProcess = function (midiNoteInput) {
 // This allows the script to react when the user selects a different MIDI input device.
 dropIns.addEventListener("change", function () {
  // links the random number generator whever channel the user is using, and changes the number when a "noteon" is recognized.
-  const listeners = WebMidi.inputs[2].addListener("noteon", randomizer,{channels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]});
+  const listeners = WebMidi.inputs[dropIns.value].addListener("noteon", randomizer,{channels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]});
   // Before changing the input device, remove any existing event listeners
   // to prevent them from being called after the device has been changed.
   if (myInput.hasListener("noteon")) {
