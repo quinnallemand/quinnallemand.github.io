@@ -12,14 +12,15 @@
 
     <!-- This script tag links to the external JavaScript file that contains the logic for handling MIDI devices. -->
     <script src="script.js" type="module"></script>
-    <h1 style="margin-bottom: 5%;">Randomize Your MIDI Notes!</h1>
+    <h1 style="margin-bottom: 2%;">Randomize Your MIDI Notes!</h1>
+    <h2 style="margin-bottom: 2%;"> By Quinn Allemand</h2>
   </head>
   <body>
     <!-- The body section contains the content of the web page. -->
-    <h3 style="margin-bottom: 5%;" >Select Your Midi Input and output</h3>
+    <h3 style="margin-bottom: 2%;" >Select Your Midi Input and output</h3>
     <!-- An h1 header that provides a title or a brief description of the page's purpose. -->
 
-    <div style="margin-bottom: 5%;">
+    <div style="margin-bottom: 2%;">
       <!-- A division or a section in an HTML document, used here to group the input device selector. -->
       <label for="dropdown-ins">Select a MIDI Input:</label>
       <!-- The label tag defines a label for the select element below. The 'for' attribute specifies which form element the label is bound to. -->
@@ -29,7 +30,7 @@
       </select>
     </div>
 
-    <div style="margin-bottom: 5%;">
+    <div style="margin-bottom: 2%;">
       <!-- Another division for grouping the output device selector. -->
       <label for="dropdown-outs">Select a MIDI Output:</label>
       <!-- Similar to the input label, this defines a label for the MIDI output selector. -->
@@ -39,8 +40,8 @@
       </select>
     </div>
     <!-- Slider!! we neeed to send it to javascript, set a range for it and then in Java we need this to effect the transposition -->
-    <h3 style="margin-bottom: 5%;">Press a "Scale Button" and Keep Hitting the Same Note to Hear the Effect</h3>
-    <div style="margin-bottom: 5%;">
+    <h3 style="margin-bottom: 2%;">Press a "Scale Button" and Keep Hitting the Same Note to Hear the Effect</h3>
+    <div style="margin-bottom: 2%;">
       <button id="majorScale">Major Scale</button>
       <button id="noScale">Chromatic</button>
       <button id="minorScale">minor Scale</button>
@@ -48,7 +49,7 @@
       <button id="minorPentScale">Minor Pentatonic</button>
 
     </div>
-    <div style="margin-bottom: 5%;">
+    <div style="margin-bottom: 2%;">
       <p1> This program takes your MIDI notes and then Randomizes them within the constraints of a scale such as Major Minor, or Chormatic.
       The way this works is, There are two different global Arrays, One of them, called "scales," contains the information for the scale and/or 
       key. the other is a capturing device, called "noteAdd," for a randomizer that spits out differnt index nubmers for "scales."
@@ -61,12 +62,12 @@
       like that of the pentatonic scales.
       </p1>
   </div>
-  <div style="margin-bottom: 5%;">
+  <div style="margin-bottom: 2%;">
     <p2>By the time you read this Canvas will have told you I submitted this assignment late but that was because I didnt expext half of the
       issues that I faced when I started this project.
     </p2>
   </div>
-  <div style="margin-bottom: 5%;">
+  <div style="margin-bottom: 2%;">
    <p3>I hope everything works by the time you open this aswell - Quinn Allemand-</p3>
   </div>
   </body>
